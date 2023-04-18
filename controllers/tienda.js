@@ -44,12 +44,12 @@ module.exports = {
     postTienda:
     async (req, res, next) => {
       try {
-        const {id, fecha_Tienda, fecha_aprobada, fecha_entrega, estatus, idChofer, idAdministrador, idDesarrollador, idTienda, CEDINombre} = req.body;
+        const {id, nombre, tamano, giro, canal, num_refrigerador, colonia, calle_no, CP, ciudad, estado, celular, puerta_medidas, idDueño} = req.body;
 
         const pool = await poolPromise;
         const result = await pool
           .request()
-          .query(`INSERT INTO Tienda VALUES('${id}', '${fecha_Tienda}', '${fecha_aprobada}', '${fecha_entrega}', '${estatus}', ${idAdministrador}, ${idChofer}, ${idDesarrollador}, '${idTienda}', '${CEDINombre}')`, function (err, resultset) {
+          .query(`INSERT INTO Tienda VALUES('${id}', '${nombre}', '${tamano}', '${giro}', '${canal}', ${num_refrigerador}, '${colonia}', '${calle_no}', ${CP}, '${ciudad}', '${estado}', ${celular}, '${puerta_medidas}', '${idDueño}')`, function (err, resultset) {
             if (err) {
               console.log(err);
             } else {
@@ -68,13 +68,13 @@ module.exports = {
       try {
         const id= req.params.id;
 
-        const {fecha_Tienda, fecha_aprobada, fecha_entrega, estatus, idChofer, idAdministrador, idDesarrollador, idTienda, CEDINombre} = req.body;
+        const {nombre, tamano, giro, canal, num_refrigerador, colonia, calle_no, CP, ciudad, estado, celular, puerta_medidas, idDueño} = req.body;
 
         const pool = await poolPromise;
         const result = await pool
           .request()
           .query(`UPDATE Tienda
-                  SET fecha_Tienda = '${fecha_Tienda}', fecha_aprobada = '${fecha_aprobada}', fecha_entrega = '${fecha_entrega}', estatus = '${estatus}', idChofer = ${idChofer}, idAdministrador = ${idAdministrador}, idDesarrollador = ${idDesarrollador}, idTienda = '${idTienda}', CEDINombre = '${CEDINombre}'
+                  SET nombre = '${nombre}', tamaño = '${tamano}', giro = '${giro}', canal = '${canal}', num_refrigerador = ${num_refrigerador}, colonia = '${colonia}', calle_no = '${calle_no}', CP = ${CP}, ciudad = '${ciudad}', estado = '${estado}', celular = ${celular}, puerta_medidas = '${puerta_medidas}', idDueño = '${idDueño}'
                   WHERE idTienda = '${id}'`
                   , function (err, resultset) {
             if (err) {
