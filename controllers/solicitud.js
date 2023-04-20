@@ -99,7 +99,7 @@ module.exports = {
         const result = await pool
           .request()
           .query(`DELETE FROM Solicitud 
-                  WHERE idSolicitud = '${id}'`
+                  WHERE usuario = '${id}'`
                   , function (err, resultset) {
             if (err) {
               console.log(err);

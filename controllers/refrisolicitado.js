@@ -44,12 +44,12 @@ module.exports = {
     postRefriSolicitado:
     async (req, res, next) => {
       try {
-        const {id, idRefrigerador, idSolicitud, fecha_Entrega, movimiento, comentarios, idChecklist} = req.body;
+        const {id, idModelo, idSolicitud, fecha_Entrega, movimiento, comentarios, idChecklist} = req.body;
 
         const pool = await poolPromise;
         const result = await pool
           .request()
-          .query(`INSERT INTO RefrigeradorSolicitado VALUES(${id}, '${idRefrigerador}', '${idSolicitud}', '${fecha_Entrega}', '${movimiento}', '${comentarios}', ${idChecklist})`, function (err, resultset) {
+          .query(`INSERT INTO RefrigeradorSolicitado VALUES(${id}, '${idModelo}', '${idSolicitud}', '${fecha_Entrega}', '${movimiento}', '${comentarios}', ${idChecklist})`, function (err, resultset) {
             if (err) {
               console.log(err);
             } else {
@@ -68,13 +68,13 @@ module.exports = {
       try {
         const id= req.params.id;
 
-        const {idRefrigerador, idSolicitud, fecha_Entrega, movimiento, comentarios, idChecklist} = req.body;
+        const {idModelo, idSolicitud, fecha_Entrega, movimiento, comentarios, idChecklist} = req.body;
 
         const pool = await poolPromise;
         const result = await pool
           .request()
           .query(`UPDATE RefrigeradorSolicitado
-                  SET idRefrigerador = '${idRefrigerador}', idSolicitud = '${idSolicitud}', fecha_Entrega = '${fecha_Entrega}', movimiento = '${movimiento}', comentarios = '${comentarios}', idChecklist = ${idChecklist}
+                  SET idModelo = '${idModelo}', idSolicitud = '${idSolicitud}', fecha_Entrega = '${fecha_Entrega}', movimiento = '${movimiento}', comentarios = '${comentarios}', idChecklist = ${idChecklist}
                   WHERE idRefrigeradorSolicitado = '${id}'`
                   , function (err, resultset) {
             if (err) {

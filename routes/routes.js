@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 router.use("/desarrollador", require("./desarrollador.js"));
-router.use("/refrigerador", require("./refrigerador.js"));
 router.use("/modelo", require("./modelo.js"));
 router.use("/checklist", require("./checklist.js"));
 router.use("/administrador", require("./administrador.js"));

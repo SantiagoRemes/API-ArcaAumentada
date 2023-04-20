@@ -44,12 +44,12 @@ module.exports = {
     postTienda:
     async (req, res, next) => {
       try {
-        const {id, nombre, tamano, giro, canal, num_refrigerador, colonia, calle_no, CP, ciudad, estado, celular, puerta_medidas, idDueño} = req.body;
+        const {id, nombre, tamano, giro, canal, num_refrigerador, colonia, calle_no, CP, ciudad, estado, celular, puerta_altura, puerta_ancho, idDueño} = req.body;
 
         const pool = await poolPromise;
         const result = await pool
           .request()
-          .query(`INSERT INTO Tienda VALUES('${id}', '${nombre}', '${tamano}', '${giro}', '${canal}', ${num_refrigerador}, '${colonia}', '${calle_no}', ${CP}, '${ciudad}', '${estado}', ${celular}, '${puerta_medidas}', '${idDueño}')`, function (err, resultset) {
+          .query(`INSERT INTO Tienda VALUES('${id}', '${nombre}', '${tamano}', '${giro}', '${canal}', ${num_refrigerador}, '${colonia}', '${calle_no}', ${CP}, '${ciudad}', '${estado}', ${celular}, ${puerta_altura}, ${puerta_ancho}, '${idDueño}')`, function (err, resultset) {
             if (err) {
               console.log(err);
             } else {
@@ -68,13 +68,13 @@ module.exports = {
       try {
         const id= req.params.id;
 
-        const {nombre, tamano, giro, canal, num_refrigerador, colonia, calle_no, CP, ciudad, estado, celular, puerta_medidas, idDueño} = req.body;
+        const {nombre, tamano, giro, canal, num_refrigerador, colonia, calle_no, CP, ciudad, estado, celular, puerta_altura, puerta_ancho, idDueño} = req.body;
 
         const pool = await poolPromise;
         const result = await pool
           .request()
           .query(`UPDATE Tienda
-                  SET nombre = '${nombre}', tamaño = '${tamano}', giro = '${giro}', canal = '${canal}', num_refrigerador = ${num_refrigerador}, colonia = '${colonia}', calle_no = '${calle_no}', CP = ${CP}, ciudad = '${ciudad}', estado = '${estado}', celular = ${celular}, puerta_medidas = '${puerta_medidas}', idDueño = '${idDueño}'
+                  SET nombre = '${nombre}', tamaño = '${tamano}', giro = '${giro}', canal = '${canal}', num_refrigerador = ${num_refrigerador}, colonia = '${colonia}', calle_no = '${calle_no}', CP = ${CP}, ciudad = '${ciudad}', estado = '${estado}', celular = ${celular}, puerta_altura = ${puerta_altura}, puerta_ancho = ${puerta_ancho}, idDueño = '${idDueño}'
                   WHERE idTienda = '${id}'`
                   , function (err, resultset) {
             if (err) {
