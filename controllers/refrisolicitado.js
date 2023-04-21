@@ -114,5 +114,32 @@ module.exports = {
           .json({ message: `Error al borrar los RefriSolicitadoes. Err: ${err}` });
       }
     },
+    RefriPorTienda:
+    async (req, res, next) => {
+      try {
+        const id= req.params.id;
+
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`Select * 
+                  FROM RefrigeradorSolicitado RS JOIN Soilicitud S on RS.idSolicitud=S.idSolicitud
+                  JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
+                  JOIN Tienda T on S.idTienda=T.idTienda
+                  WHERE idTienda = '${id}'`
+                  , function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var dato = resultset.rowsAffected;
+              return res.status(200).json(dato);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los RefriSolicitadoes. Err: ${err}` });
+      }
+    },
 
 };

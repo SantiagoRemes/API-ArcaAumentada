@@ -7,6 +7,7 @@ router.get("/:id", RefriSolicitado.getRefriSolicitado);
 router.post("/add", RefriSolicitado.postRefriSolicitado);
 router.put("/update/:id", RefriSolicitado.putRefriSolicitado);
 router.delete("/delete/:id", RefriSolicitado.deleteRefriSolicitado);
+router.get("/refriportienda/:id", RefriSolicitado.RefriPorTienda);
 
 
 module.exports = router;
