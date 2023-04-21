@@ -123,16 +123,16 @@ module.exports = {
         const result = await pool
           .request()
           .query(`Select * 
-                  FROM RefrigeradorSolicitado RS JOIN Soilicitud S on RS.idSolicitud=S.idSolicitud
+                  FROM RefrigeradorSolicitado RS JOIN Solicitud S on RS.idSolicitud=S.idSolicitud
                   JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
                   JOIN Tienda T on S.idTienda=T.idTienda
-                  WHERE idTienda = '${id}'`
+                  WHERE T.idTienda = '${id}'`
                   , function (err, resultset) {
             if (err) {
               console.log(err);
             } else {
-              var dato = resultset.rowsAffected;
-              return res.status(200).json(dato);
+              var RefriSolicitadoes = resultset.recordset;
+              return res.status(200).json(RefriSolicitadoes);
             }
           });
       } catch (err) {

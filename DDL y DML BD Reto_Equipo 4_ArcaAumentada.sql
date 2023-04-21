@@ -143,7 +143,7 @@ values('Guadalupe','Mexico','Monterrey','Noreste');
 insert into Chofer 
 values(213454,'Juan Perez',812324321,'JUAN2135PG','PASSWD1234');
 
-insert into Due�o 
+insert into Dueño 
 values(1836577170,'Monterrey','Nuevo Leon',8111753034,'Antonia L�pez Villarreal','Alta Vista','Buenos Aires 200', 64800);
 
 insert into Tienda 
@@ -168,7 +168,7 @@ insert into ModeloRefrigerador
 values ('CRIOTEC-CFX64-G',3,'G',945,5,85050.00,'Criotec',4899.00,6.82,23625.00,'Coca-Cola')
 
 insert into Administrador
-values (145675, 'Carlos Due�az', 819231231, 'CarlosDu�', 'ArcaCocaCola');
+values (145675, 'Carlos Due�az', 819231231, 'CarlosDu', 'ArcaCocaCola');
 
 insert into Desarrollador
 values (326372, 'Juan Mercedes', 8117263540, 'JuanMercedes', '20023010');
