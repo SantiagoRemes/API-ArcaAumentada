@@ -61,8 +61,8 @@ create table Desarrollador(
 	Primary Key (idDesarrollador),
 );
 
-create table Dueño(
-	idDueño varchar(100),
+create table Dueï¿½o(
+	idDueï¿½o varchar(100),
 	ciudad varchar(50),
 	estado varchar(50),
 	celular int,
@@ -70,13 +70,13 @@ create table Dueño(
 	colonia varchar(50),
 	calle_no varchar(30),
 	CP int,
-	Primary Key (idDueño),
+	Primary Key (idDueï¿½o),
 );
 
 create table Tienda(
 	idTienda varchar(100),
 	nombre varchar(30),
-	tamaño char(1),
+	tamaï¿½o char(1),
 	giro varchar(30),
 	canal varchar(30),
 	num_refrigerador int,
@@ -88,9 +88,9 @@ create table Tienda(
 	celular int,
 	puerta_altura float,
 	puerta_ancho float,
-	idDueño varchar(100),
+	idDueï¿½o varchar(100),
 	Primary Key (idTienda),
-	Foreign Key (idDueño) references Dueño(idDueño),
+	Foreign Key (idDueï¿½o) references Dueï¿½o(idDueï¿½o),
 );
 
 create table Visita(
@@ -141,43 +141,53 @@ insert into CEDI
 values('Guadalupe','Mexico','Monterrey','Noreste');
 
 insert into Chofer 
-values(21345,'Juan Perez',812324321,'JUAN2135PG','PASSWD1234');
+values(213454,'Juan Perez',812324321,'JUAN2135PG','PASSWD1234');
 
-insert into Dueño 
-values(1836577170,'Antonia López Villarreal','Alta Vista','Buenos Aires 200', 64800);
+insert into Dueï¿½o 
+values(1836577170,'Monterrey','Nuevo Leon',8111753034,'Antonia Lï¿½pez Villarreal','Alta Vista','Buenos Aires 200', 64800);
 
 insert into Tienda 
-values(58293949592, 'P','Abarrotes','Tradicional',1,'Buenos Aires','Xocimilco 3B',64800,1836577170);
+values(58293949592, 'Abarrotes ToÃ±ita','P','Abarrotes','Tradicional',1,'Buenos Aires','Xocimilco 3B',64800,'Monterrey', 'Nuevo Leon', 8111753034, 2.5, 1.7,1836577170);
 
 
 insert into ModeloRefrigerador
 values ('CRIOTEC-CFX19-P',1,'P',322,2,11592.00,'Criotec',1837.00,2.49,3220.00,'Coca-Cola');
-insert into Refrigerador
-values ('CRIOTEC-CFX42-P',2,'P',720,2,25920.00,'Criotec','Coca-Cola',1,3674.00,4.25,7200.00);
-insert into Refrigerador
-values ('CRIOTEC-CFX19-M',1,'M',322,4,23184.00,'Criotec','Coca-Cola',2,1837.00,2.49,6440.00);
-insert into Refrigerador
-values ('CRIOTEC-CFX42-M',2,'M',720,4,51840.00,'Criotec','Coca-Cola',6,3674.00,4.25,14400.00);
-insert into Refrigerador
-values ('CRIOTEC-CFX19-G',1,'G',322,8,46368.00,'Criotec','Coca-Cola',3,1837.00,2.49,12880.00);
+insert into ModeloRefrigerador
+values ('CRIOTEC-CFX42-P',2,'P',720,2,25920.00,'Criotec',3674.00,4.25,7200.00,'Coca-Cola');
+insert into ModeloRefrigerador
+values ('CRIOTEC-CFX19-M',1,'M',322,4,23184.00,'Criotec',1837.00,2.49,6440.00,'Coca-Cola');
+insert into ModeloRefrigerador
+values ('CRIOTEC-CFX42-M',2,'M',720,4,51840.00,'Criotec',3674.00,4.25,14400.00,'Coca-Cola');
+insert into ModeloRefrigerador
+values ('CRIOTEC-CFX64-M',3,'M',945,5,85050.00,'Criotec',4899.00,6.82,23625.00,'Coca-Cola')
+insert into ModeloRefrigerador
+values ('CRIOTEC-CFX19-G',1,'G',322,8,46368.00,'Criotec',1837.00,2.49,12880.00,'Coca-Cola');
+insert into ModeloRefrigerador
+values ('CRIOTEC-CFX42-G',2,'G',720,4,51840.00,'Criotec',3674.00,4.25,14400.00,'Coca-Cola');
+insert into ModeloRefrigerador
+values ('CRIOTEC-CFX64-G',3,'G',945,5,85050.00,'Criotec',4899.00,6.82,23625.00,'Coca-Cola')
 
 insert into Administrador
-values ('1456', 'Carlos Dueñaz', 819231231, 'CarlosDuñ', 'ArcaCocaCola');
+values (145675, 'Carlos Dueï¿½az', 819231231, 'CarlosDuï¿½', 'ArcaCocaCola');
 
 insert into Desarrollador
-values ('69420', 'Guillermo Alejandro', 811244359, 'GillArca', '20023010');
+values (326372, 'Juan Mercedes', 8117263540, 'JuanMercedes', '20023010');
 
 insert into Solicitud
-values ('1233', '2021-10-24','2021-10-28', '2021-10-30', 'Aprobada', NULL, NULL, '1', NULL, NULL);
+values ('1233', '2021-10-24','2021-10-28', '2021-10-30', 'Pendiente', 145675, 213454, 326372, 58293949592, 'Monterrey');
 
-insert into Solicitud
-values ('128382137sfhuews323278491273', '2021-10-24','2021-10-30', '2021-11-02', 'Aprobada', 1456, 21345, 69420, 'CRIOTEC-CFX19-M', 58293949592, 'Guadalupe');
+insert into RefrigeradorSolicitado
+values (1, 'CRIOTEC-CFX19-P', '1233', '2021-10-30 12:00:00', 'Si', 'No parece que vaya a caber un refrigerador grande', 1);
 
-insert into Solicitud
-values ('123', '2021-10-24',NULL, NULL, 'Negada', 1, 1, 1, NULL, 'Mty');
+insert into RefrigeradorSolicitado
+values (2, 'CRIOTEC-CFX42-P', '1233', '2021-10-30 12:00:00', 'Si', 'No parece que vaya a caber un refrigerador mÃ¡s grande que este', 1);
+
+insert into Checklist
+values (1, 1, 'Primera y Fondo', 'Mover el refrigerador actual lo suficiente para meter el nuestro', 2, '2021-10-30 12:00:00');
+
 
  insert into visita 
- values(58293949592, 69420, '2023/01/29','No parece que vaya a caber un refrigerador grande');
+ values(58293949592, 69420, '2023/01/29','No parece que vaya a caber un refrigeradorï¿½grande');
 
  insert into Refrigerador
  values('12A', 'CRIOTEC-CFX19-P' )
