@@ -23,11 +23,11 @@ module.exports = {
     getTienda:
     async (req, res, next) => {
       try {
-        const id = req.params.id;
+        const nombre = req.params.nombre;
         const pool = await poolPromise;
         const result = await pool
           .request()
-          .query(`SELECT * FROM Tienda WHERE idTienda = '${id}'`, function (err, resultset) {
+          .query(`SELECT * FROM Tienda WHERE nombre = '${nombre}'`, function (err, resultset) {
             if (err) {
               console.log(err);
             } else {
