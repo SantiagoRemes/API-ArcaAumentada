@@ -137,7 +137,7 @@ module.exports = {
       } catch (err) {
         return res
           .status(500)
-          .json({ message: `Error al borrar los Desarrolladores. Err: ${err}` });
+          .json({ message: `Error al buscar los Desarrolladores. Err: ${err}` });
       }
     },
 

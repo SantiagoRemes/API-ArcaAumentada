@@ -114,5 +114,30 @@ module.exports = {
           .json({ message: `Error al borrar los Administradores. Err: ${err}` });
       }
     },
+    loginAdministrador:
+    async (req, res, next) => {
+      try {
+        const {usuario, contrasena} = req.body;
+
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`Select * 
+                  FROM Administrador 
+                  WHERE usuario = '${usuario}' AND contrasena = '${contrasena}'`
+                  , function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var dato = resultset.recordset;
+              return res.status(200).json(dato);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al buscar los Administradores. Err: ${err}` });
+      }
+    },
 
 };

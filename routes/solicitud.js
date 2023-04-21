@@ -7,7 +7,7 @@ router.get("/", Solicitud.getAllSolicitud);
 router.post("/add", Solicitud.postSolicitud);
 router.put("/update/:id", Solicitud.putSolicitud);
 router.delete("/delete/:id", Solicitud.deleteSolicitud);
-router.get("/bydes", Solicitud.getSolicitudbyDes);
+router.get("/bydes/:idDes", Solicitud.getSolicitudbyDes);
 
 
 module.exports = router;

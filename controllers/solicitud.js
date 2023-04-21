@@ -117,7 +117,7 @@ module.exports = {
     getSolicitudbyDes:
     async (req, res, next) => {
       try {
-        const idDes = req.body.idDes;
+        const idDes = req.params.idDes;
         const pool = await poolPromise;
         const result = await pool
           .request()
