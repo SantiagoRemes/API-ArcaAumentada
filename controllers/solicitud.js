@@ -135,5 +135,28 @@ module.exports = {
           .json({ message: `Error al obtener los Solicitudes. Err: ${err}` });
       }
     },
+    getSolicitudandTienda:
+    async (req, res, next) => {
+      try {
+        const idDes = req.params.idDes;
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`SELECT * FROM Solicitud S
+                  JOIN Tienda T on S.idTienda=T.idTienda 
+                  WHERE idDesarrollador = ${idDes}`, function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var dato = resultset.recordset;
+              return res.status(200).json(dato);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los Solicitudes. Err: ${err}` });
+      }
+    },
 
 };

@@ -8,6 +8,7 @@ router.post("/add", Solicitud.postSolicitud);
 router.put("/update/:id", Solicitud.putSolicitud);
 router.delete("/delete/:id", Solicitud.deleteSolicitud);
 router.get("/bydes/:idDes", Solicitud.getSolicitudbyDes);
+router.get("/tienda/:idDes", Solicitud.getSolicitudandTienda);
 
 
 module.exports = router;
