@@ -114,5 +114,26 @@ module.exports = {
           .json({ message: `Error al borrar los Solicitudes. Err: ${err}` });
       }
     },
+    getSolicitudbyDes:
+    async (req, res, next) => {
+      try {
+        const idDes = req.body.idDes;
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`SELECT * FROM Solicitud WHERE idDesarrollador = ${idDes}`, function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var dato = resultset.recordset;
+              return res.status(200).json(dato);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los Solicitudes. Err: ${err}` });
+      }
+    },
 
 };
