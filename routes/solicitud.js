@@ -3,12 +3,15 @@ const router = express.Router();
 const Solicitud = require("../controllers/solicitud.js")
 
 router.get("/", Solicitud.getAllSolicitud);
-//router.get("/:id", Solicitud.getSolicitud);
+
 router.post("/add", Solicitud.postSolicitud);
 router.put("/update/:id", Solicitud.putSolicitud);
 router.delete("/delete/:id", Solicitud.deleteSolicitud);
 router.get("/bydes/:idDes", Solicitud.getSolicitudbyDes);
-router.get("/tienda/:idDes", Solicitud.getSolicitudandTienda);
+router.get("/tiendades/:idDes", Solicitud.getSolicitudandTiendaDes);
+router.get("/tiendaadmin/:idChofer", Solicitud.getSolicitudandTiendaChofer);
+router.get("/tiendaadmin", Solicitud.getSolicitudandTiendaAdmin);
+router.get("/idsol/:id", Solicitud.getSolicitud);
 
 
 module.exports = router;

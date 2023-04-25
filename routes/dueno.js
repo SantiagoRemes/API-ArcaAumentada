@@ -7,6 +7,7 @@ router.get("/:nombre", Dueño.getDueño);
 router.post("/add", Dueño.postDueño);
 router.put("/update/:id", Dueño.putDueño);
 router.delete("/delete/:id", Dueño.deleteDueño);
+router.get("/id/:id", Dueño.Dueñoid);
 
 
 module.exports = router;

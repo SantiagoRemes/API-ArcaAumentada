@@ -115,4 +115,26 @@ module.exports = {
       }
     },
 
+    Dueñoid:
+    async (req, res, next) => {
+      try {
+        const id = req.params.id;
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`SELECT * FROM Dueño WHERE idDueño = '${id}'`, function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var dato = resultset.recordset;
+              return res.status(200).json(dato);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los Dueños. Err: ${err}` });
+      }
+    },
+
 };

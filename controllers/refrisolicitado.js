@@ -141,5 +141,61 @@ module.exports = {
           .json({ message: `Error al obtener los RefriSolicitadoes. Err: ${err}` });
       }
     },
+    CountRefri:
+    async (req, res, next) => {
+      try {
+        const id= req.params.id;
+
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`Select Count(RS.idModelo)
+                  FROM RefrigeradorSolicitado RS JOIN Solicitud S on RS.idSolicitud=S.idSolicitud
+                  JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
+                  JOIN Tienda T on S.idTienda=T.idTienda
+                  WHERE T.idTienda = '${id}'
+                  GROUP BY RS.idModelo`
+                  , function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var RefriSolicitadoes = resultset.recordset;
+              return res.status(200).json(RefriSolicitadoes);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los RefriSolicitadoes. Err: ${err}` });
+      }
+    },
+    SumPuertas:
+    async (req, res, next) => {
+      try {
+        const id= req.params.id;
+
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`Select Sum(Puertas) as puertastot
+                  FROM RefrigeradorSolicitado RS JOIN Solicitud S on RS.idSolicitud=S.idSolicitud
+                  JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
+                  JOIN Tienda T on S.idTienda=T.idTienda
+                  WHERE T.idTienda = '${id}'
+                  `
+                  , function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var RefriSolicitadoes = resultset.recordset;
+              return res.status(200).json(RefriSolicitadoes);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los RefriSolicitadoes. Err: ${err}` });
+      }
+    },
 
 };

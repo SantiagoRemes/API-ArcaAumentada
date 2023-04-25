@@ -144,10 +144,10 @@ insert into Chofer
 values(213454,'Juan Perez',812324321,'JUAN2135PG','PASSWD1234');
 
 insert into Dueño 
-values(1836577170,'Monterrey','Nuevo Leon',8111753034,'Antonia L�pez Villarreal','Alta Vista','Buenos Aires 200', 64800);
+values('1836577170A','Monterrey','Nuevo Leon',8111,'Antonia Lopez Villarreal','Alta Vista','Buenos Aires 200', 64800);
 
 insert into Tienda 
-values(58293949592, 'Abarrotes Toñita','P','Abarrotes','Tradicional',1,'Buenos Aires','Xocimilco 3B',64800,'Monterrey', 'Nuevo Leon', 8111753034, 2.5, 1.7,1836577170);
+values('58293949592', 'Abarrotes Toñita','P','Abarrotes','Tradicional',1,'Buenos Aires','Xocimilco 3B',64800,'Monterrey', 'Nuevo Leon', 811175, 2.5, 1.7,'1836577170A');
 
 
 insert into ModeloRefrigerador
@@ -168,19 +168,19 @@ insert into ModeloRefrigerador
 values ('CRIOTEC-CFX64-G',3,'G',945,5,85050.00,'Criotec',4899.00,6.82,23625.00,'Coca-Cola')
 
 insert into Administrador
-values (145675, 'Carlos Due�az', 819231231, 'CarlosDu', 'ArcaCocaCola');
+values (145675, 'Carlos Due�az', 819231, 'CarlosDu', 'ArcaCocaCola');
 
 insert into Desarrollador
-values (326372, 'Juan Mercedes', 8117263540, 'JuanMercedes', '20023010');
+values (326372, 'Juan Mercedes', 811726, 'JuanMercedes', '20023010');
 
 insert into Solicitud
-values ('1233', '2021-10-24','2021-10-28', '2021-10-30', 'Pendiente', 145675, 213454, 326372, 58293949592, 'Monterrey');
+values ('12334', '2021-10-24','2021-10-28', '2021-10-30', 'Pendiente', 145675, 213454, 326372, '58293949592', 'Guadalupe');
 
 insert into RefrigeradorSolicitado
-values (1, 'CRIOTEC-CFX19-P', '1233', '2021-10-30 12:00:00', 'Si', 'No parece que vaya a caber un refrigerador grande', 1);
+values (3, 'CRIOTEC-CFX19-P', '12334', '2021-10-30 12:00:00', 'Si', 'No parece que vaya a caber un refrigerador grande', 1);
 
 insert into RefrigeradorSolicitado
-values (2, 'CRIOTEC-CFX42-P', '1233', '2021-10-30 12:00:00', 'Si', 'No parece que vaya a caber un refrigerador más grande que este', 1);
+values (2, 'CRIOTEC-CFX42-P', '12334', '2021-10-30 12:00:00', 'Si', 'No parece que vaya a caber un refrigerador más grande que este', 1);
 
 insert into Checklist
 values (1, 1, 'Primera y Fondo', 'Mover el refrigerador actual lo suficiente para meter el nuestro', 2, '2021-10-30 12:00:00');
@@ -196,3 +196,7 @@ values (1, 1, 'Primera y Fondo', 'Mover el refrigerador actual lo suficiente par
  Select * from ModeloRefrigerador
 
  Select * from Refrigerador
+
+ select * from Administrador
+
+ delete from Administrador where idAdministrador = 145675

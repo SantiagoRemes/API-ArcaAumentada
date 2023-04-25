@@ -7,6 +7,7 @@ router.get("/:nombre", Tienda.getTienda);
 router.post("/add", Tienda.postTienda);
 router.put("/update/:id", Tienda.putTienda);
 router.delete("/delete/:id", Tienda.deleteTienda);
+router.get("/id/:id", Tienda.Tiendaid);
 
 
 module.exports = router;

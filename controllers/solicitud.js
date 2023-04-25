@@ -68,13 +68,13 @@ module.exports = {
       try {
         const id= req.params.id;
 
-        const {fecha_solicitud, fecha_aprobada, fecha_entrega, estatus, idChofer, idAdministrador, idDesarrollador, idTienda, CEDINombre} = req.body;
+        const {estatus} = req.body;
 
         const pool = await poolPromise;
         const result = await pool
           .request()
           .query(`UPDATE Solicitud
-                  SET fecha_solicitud = '${fecha_solicitud}', fecha_aprobada = '${fecha_aprobada}', fecha_entrega = '${fecha_entrega}', estatus = '${estatus}', idChofer = ${idChofer}, idAdministrador = ${idAdministrador}, idDesarrollador = ${idDesarrollador}, idTienda = '${idTienda}', CEDINombre = '${CEDINombre}'
+                  SET estatus = '${estatus}'
                   WHERE idSolicitud = '${id}'`
                   , function (err, resultset) {
             if (err) {
@@ -135,7 +135,7 @@ module.exports = {
           .json({ message: `Error al obtener los Solicitudes. Err: ${err}` });
       }
     },
-    getSolicitudandTienda:
+    getSolicitudandTiendaDes:
     async (req, res, next) => {
       try {
         const idDes = req.params.idDes;
@@ -145,6 +145,50 @@ module.exports = {
           .query(`SELECT * FROM Solicitud S
                   JOIN Tienda T on S.idTienda=T.idTienda 
                   WHERE idDesarrollador = ${idDes}`, function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var dato = resultset.recordset;
+              return res.status(200).json(dato);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los Solicitudes. Err: ${err}` });
+      }
+    },
+    getSolicitudandTiendaChofer:
+    async (req, res, next) => {
+      try {
+        const idChofer = req.params.idDes;
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`SELECT * FROM Solicitud S
+                  JOIN Tienda T on S.idTienda=T.idTienda 
+                  WHERE idChofer = ${idCofer}`, function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var dato = resultset.recordset;
+              return res.status(200).json(dato);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los Solicitudes. Err: ${err}` });
+      }
+    },
+    getSolicitudandTiendaAdmin:
+    async (req, res, next) => {
+      try {
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`SELECT * FROM Solicitud S
+                  JOIN Tienda T on S.idTienda=T.idTienda`, function (err, resultset) {
             if (err) {
               console.log(err);
             } else {
