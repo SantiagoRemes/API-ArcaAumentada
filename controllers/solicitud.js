@@ -144,7 +144,8 @@ module.exports = {
           .request()
           .query(`SELECT * FROM Solicitud S
                   JOIN Tienda T on S.idTienda=T.idTienda 
-                  WHERE idDesarrollador = ${idDes}`, function (err, resultset) {
+                  WHERE idDesarrollador = ${idDes}
+                  ORDER BY idSolicitud DESC`, function (err, resultset) {
             if (err) {
               console.log(err);
             } else {
@@ -189,6 +190,55 @@ module.exports = {
           .request()
           .query(`SELECT * FROM Solicitud S
                   JOIN Tienda T on S.idTienda=T.idTienda`, function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var dato = resultset.recordset;
+              return res.status(200).json(dato);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los Solicitudes. Err: ${err}` });
+      }
+    },
+    getSolicitudandByEstado:
+    async (req, res, next) => {
+      try {
+        const { estatus, idDes } = req.body;
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`SELECT * FROM Solicitud S
+                  WHERE estatus = '${estatus}' 
+                  AND idDesarrollador = '${idDes}' 
+                  AND MONTH(GETDATE()) = MONTH(fecha_solicitud) 
+                  AND YEAR(GETDATE()) = YEAR(fecha_solicitud)`, function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var dato = resultset.recordset;
+              return res.status(200).json(dato);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los Solicitudes. Err: ${err}` });
+      }
+    },
+    getSolicitudandIdDesDate:
+    async (req, res, next) => {
+      try {
+        const { id } = req.params;
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`SELECT * FROM Solicitud S
+                  WHERE idDesarrollador = '${id}' 
+                  AND MONTH(GETDATE()) = MONTH(fecha_solicitud) 
+                  AND YEAR(GETDATE()) = YEAR(fecha_solicitud) AND estatus != 'Negada'`, function (err, resultset) {
             if (err) {
               console.log(err);
             } else {

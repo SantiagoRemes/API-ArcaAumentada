@@ -105,7 +105,7 @@ create table Visita(
 );
 
 create table Solicitud(
-	idSolicitud varchar(100),
+	idSolicitud int NOT NULL AUTO_INCREMENT,
 	fecha_solicitud date,
 	fecha_Aprobada date,
 	fecha_Entrega date,
@@ -174,7 +174,7 @@ insert into Desarrollador
 values (326372, 'Juan Mercedes', 811726, 'JuanMercedes', '20023010');
 
 insert into Solicitud
-values ('12334', '2021-10-24','2021-10-28', '2021-10-30', 'Pendiente', 145675, 213454, 326372, '58293949592', 'Guadalupe');
+values ('123345678', '2023-04-24','2021-10-28', '2021-10-30', 'Terminada', 145675, 213454, 326372, '58293949592', 'Guadalupe');
 
 insert into RefrigeradorSolicitado
 values (3, 'CRIOTEC-CFX19-P', '12334', '2021-10-30 12:00:00', 'Si', 'No parece que vaya a caber un refrigerador grande', 1);
@@ -200,3 +200,17 @@ values (1, 1, 'Primera y Fondo', 'Mover el refrigerador actual lo suficiente par
  select * from Administrador
 
  delete from Administrador where idAdministrador = 145675
+
+
+
+
+ SELECT * FROM Solicitud S
+ WHERE estatus = 'Pendiente' AND idDesarrollador = '326372' AND MONTH(GETDATE()) = MONTH(fecha_solicitud) AND YEAR(GETDATE()) = YEAR(fecha_solicitud)
+
+ SELECT YEAR(GETDATE()) AS Year;
+
+
+ SELECT * FROM Solicitud S
+JOIN Tienda T on S.idTienda=T.idTienda 
+                  WHERE idDesarrollador = '326372'
+                  ORDER BY idSolicitud DESC
