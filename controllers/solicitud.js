@@ -144,7 +144,7 @@ module.exports = {
           .request()
           .query(`SELECT * FROM Solicitud S
                   JOIN Tienda T on S.idTienda=T.idTienda 
-                  WHERE idDesarrollador = ${idDes}
+                  WHERE idDesarrollador = ${idDes} AND estatus != 'Terminada'
                   ORDER BY idSolicitud DESC`, function (err, resultset) {
             if (err) {
               console.log(err);
@@ -239,6 +239,34 @@ module.exports = {
                   WHERE idDesarrollador = '${id}' 
                   AND MONTH(GETDATE()) = MONTH(fecha_solicitud) 
                   AND YEAR(GETDATE()) = YEAR(fecha_solicitud) AND estatus != 'Negada'`, function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var dato = resultset.recordset;
+              return res.status(200).json(dato);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los Solicitudes. Err: ${err}` });
+      }
+    },
+    getFullSolicitud:
+    async (req, res, next) => {
+      try {
+        const { id } = req.params;
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`SELECT * FROM Solicitud S
+                  JOIN Tienda T ON S.idTienda=T.idTienda
+                  JOIN Dueño D ON T.idDueño=D.idDueño
+                  JOIN CEDI C ON S.CEDINombre=C.CEDINombre
+                  JOIN Chofer Ch ON S.idChofer=Ch.idChofer
+                  JOIN Administrador A ON S.idAdministrador=A.idAdministrador
+                  JOIN Desarrollador Des ON S.idDesarrollador=Des.idDesarrollador
+                  WHERE S.idSolicitud = '${id}' `, function (err, resultset) {
             if (err) {
               console.log(err);
             } else {

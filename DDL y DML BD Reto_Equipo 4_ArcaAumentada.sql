@@ -1,5 +1,5 @@
-Create database ArcaAumentada2;
-Use ArcaAumentada2;
+Create database ArcaAumentada;
+Use ArcaAumentada;
 
 create table Checklist(
 	idChecklist int,
@@ -61,8 +61,8 @@ create table Desarrollador(
 	Primary Key (idDesarrollador),
 );
 
-create table Due�o(
-	idDue�o varchar(100),
+create table Dueño(
+	idDueño varchar(100),
 	ciudad varchar(50),
 	estado varchar(50),
 	celular int,
@@ -70,13 +70,13 @@ create table Due�o(
 	colonia varchar(50),
 	calle_no varchar(30),
 	CP int,
-	Primary Key (idDue�o),
+	Primary Key (idDueño),
 );
 
 create table Tienda(
 	idTienda varchar(100),
 	nombre varchar(30),
-	tama�o char(1),
+	tamaño char(1),
 	giro varchar(30),
 	canal varchar(30),
 	num_refrigerador int,
@@ -88,9 +88,9 @@ create table Tienda(
 	celular int,
 	puerta_altura float,
 	puerta_ancho float,
-	idDue�o varchar(100),
+	idDueño varchar(100),
 	Primary Key (idTienda),
-	Foreign Key (idDue�o) references Due�o(idDue�o),
+	Foreign Key (idDueño) references Dueño(idDueño),
 );
 
 create table Visita(
@@ -105,7 +105,7 @@ create table Visita(
 );
 
 create table Solicitud(
-	idSolicitud int NOT NULL AUTO_INCREMENT,
+	idSolicitud INT IDENTITY(1,1) NOT NULL,
 	fecha_solicitud date,
 	fecha_Aprobada date,
 	fecha_Entrega date,
@@ -126,10 +126,11 @@ create table Solicitud(
 create table RefrigeradorSolicitado(
 	idRefrigeradorSolicitado int,
 	idModelo varchar(30),
-	idSolicitud varchar(100),
+	idSolicitud int,
 	fecha_Entrega datetime,
 	movimiento varchar(10),
 	comentarios varchar(200),
+	imageurl varchar(300),
 	idChecklist int,
 	Primary Key (idRefrigeradorSolicitado),
 	Foreign Key (idModelo) references ModeloRefrigerador(idModelo),
@@ -168,26 +169,35 @@ insert into ModeloRefrigerador
 values ('CRIOTEC-CFX64-G',3,'G',945,5,85050.00,'Criotec',4899.00,6.82,23625.00,'Coca-Cola')
 
 insert into Administrador
-values (145675, 'Carlos Due�az', 819231, 'CarlosDu', 'ArcaCocaCola');
+values (145675, 'Carlos Dueñaz', 819231, 'CarlosDu', 'ArcaCocaCola');
 
 insert into Desarrollador
 values (326372, 'Juan Mercedes', 811726, 'JuanMercedes', '20023010');
 
 insert into Solicitud
-values ('123345678', '2023-04-24','2021-10-28', '2021-10-30', 'Terminada', 145675, 213454, 326372, '58293949592', 'Guadalupe');
+values ('2023-04-24','2021-10-28', '2021-10-30', 'Terminada', 145675, 213454, 326372, '58293949592', 'Guadalupe');
+
+insert into Solicitud
+values ('2023-04-24','2021-10-28', '2021-10-30', 'Aprobada', 145675, 213454, 326372, '58293949592', 'Guadalupe');
+
+insert into Solicitud
+values ('2023-04-24','2021-10-28', '2021-10-30', 'Pendiente', 145675, 213454, 326372, '58293949592', 'Guadalupe');
+
+insert into Solicitud
+values ('2023-04-24','2021-10-28', '2021-10-30', 'Negada', 145675, 213454, 326372, '58293949592', 'Guadalupe');
 
 insert into RefrigeradorSolicitado
-values (3, 'CRIOTEC-CFX19-P', '12334', '2021-10-30 12:00:00', 'Si', 'No parece que vaya a caber un refrigerador grande', 1);
+values (5, 'CRIOTEC-CFX19-P', 4, '2021-10-30 12:00:00', 'Si', 'No parece que vaya a caber un refrigerador grande', 'aaa',1);
 
 insert into RefrigeradorSolicitado
-values (2, 'CRIOTEC-CFX42-P', '12334', '2021-10-30 12:00:00', 'Si', 'No parece que vaya a caber un refrigerador más grande que este', 1);
+values (6, 'CRIOTEC-CFX42-P', 4, '2021-10-30 12:00:00', 'Si', 'No parece que vaya a caber un refrigerador más grande que este', 'a',1);
 
 insert into Checklist
 values (1, 1, 'Primera y Fondo', 'Mover el refrigerador actual lo suficiente para meter el nuestro', 2, '2021-10-30 12:00:00');
 
 
  insert into visita 
- values(58293949592, 69420, '2023/01/29','No parece que vaya a caber un refrigerador�grande');
+ values(58293949592, 69420, '2023/01/29','No parece que vaya a caber un refrigeradorñgrande');
 
  insert into Refrigerador
  values('12A', 'CRIOTEC-CFX19-P' )
@@ -214,3 +224,20 @@ values (1, 1, 'Primera y Fondo', 'Mover el refrigerador actual lo suficiente par
 JOIN Tienda T on S.idTienda=T.idTienda 
                   WHERE idDesarrollador = '326372'
                   ORDER BY idSolicitud DESC
+
+
+
+
+				  Select * 
+                  FROM RefrigeradorSolicitado RS JOIN Solicitud S on RS.idSolicitud=S.idSolicitud
+                  JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
+                  JOIN Tienda T on S.idTienda=T.idTienda
+                  WHERE T.idTienda = 58293949592 AND idRefrigeradorSolicitado NOT IN (Select  idRefrigeradorSolicitado
+																					  FROM RefrigeradorSolicitado RS
+																					  JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
+																					  WHERE RS.idSolicitud = 4)
+
+				  Select  *
+                  FROM RefrigeradorSolicitado RS
+                  JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
+                  WHERE RS.idSolicitud = 4

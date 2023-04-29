@@ -14,6 +14,7 @@ router.get("/tiendaadmin", Solicitud.getSolicitudandTiendaAdmin);
 router.get("/idsol/:id", Solicitud.getSolicitud);
 router.post("/byestado", Solicitud.getSolicitudandByEstado);
 router.get("/idesdate/:id", Solicitud.getSolicitudandIdDesDate);
+router.get("/solicitudall/:id", Solicitud.getFullSolicitud)
 
 
 module.exports = router;

@@ -68,13 +68,13 @@ module.exports = {
       try {
         const id= req.params.id;
 
-        const {idModelo, idSolicitud, fecha_Entrega, movimiento, comentarios, idChecklist} = req.body;
+        const {idModelo, idSolicitud, fecha_Entrega, movimiento, comentarios, idChecklist, imageurl} = req.body;
 
         const pool = await poolPromise;
         const result = await pool
           .request()
           .query(`UPDATE RefrigeradorSolicitado
-                  SET idModelo = '${idModelo}', idSolicitud = '${idSolicitud}', fecha_Entrega = '${fecha_Entrega}', movimiento = '${movimiento}', comentarios = '${comentarios}', idChecklist = ${idChecklist}
+                  SET idModelo = '${idModelo}', idSolicitud = '${idSolicitud}', fecha_Entrega = '${fecha_Entrega}', movimiento = '${movimiento}', comentarios = '${comentarios}', imageurl = '${imageurl}',idChecklist = ${idChecklist}
                   WHERE idRefrigeradorSolicitado = '${id}'`
                   , function (err, resultset) {
             if (err) {
@@ -117,16 +117,20 @@ module.exports = {
     RefriPorTienda:
     async (req, res, next) => {
       try {
-        const id= req.params.id;
-
+        const { idTienda, idSolicitud} = req.body;
         const pool = await poolPromise;
         const result = await pool
           .request()
           .query(`Select * 
-                  FROM RefrigeradorSolicitado RS JOIN Solicitud S on RS.idSolicitud=S.idSolicitud
+                  FROM RefrigeradorSolicitado RS 
+                  JOIN Solicitud S on RS.idSolicitud=S.idSolicitud
                   JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
                   JOIN Tienda T on S.idTienda=T.idTienda
-                  WHERE T.idTienda = '${id}'`
+                  WHERE T.idTienda = '${idTienda}' 
+                  AND idRefrigeradorSolicitado NOT IN (SELECT idRefrigeradorSolicitado
+                                                        FROM RefrigeradorSolicitado RS
+                                                        JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
+                                                        WHERE RS.idSolicitud = ${idSolicitud})`
                   , function (err, resultset) {
             if (err) {
               console.log(err);
@@ -197,5 +201,114 @@ module.exports = {
           .json({ message: `Error al obtener los RefriSolicitadoes. Err: ${err}` });
       }
     },
+    RefriSolicitado:
+    async (req, res, next) => {
+      try {
+        const id= req.params.id;
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`Select *
+                  FROM RefrigeradorSolicitado RS
+                  JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
+                  WHERE RS.idSolicitud = ${id}`
+                  , function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var RefriSolicitadoes = resultset.recordset;
+              return res.status(200).json(RefriSolicitadoes);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los RefriSolicitadoes. Err: ${err}` });
+      }
+    },
+    RefriSolicitadoPuertas:
+    async (req, res, next) => {
+      try {
+        const id= req.params.id;
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`Select SUM(puertas) as puertas
+                  FROM RefrigeradorSolicitado RS
+                  JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
+                  WHERE RS.idSolicitud = ${id}
+                  GROUP BY RS.idSolicitud`
+                  , function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var RefriSolicitadoes = resultset.recordset;
+              return res.status(200).json(RefriSolicitadoes);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los RefriSolicitadoes. Err: ${err}` });
+      }
+    },
+    UpdateMovimiento:
+    async (req, res, next) => {
+      try {
+        const id= req.params.id;
 
+        const {movimiento} = req.body;
+
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`UPDATE RefrigeradorSolicitado
+                  SET movimiento = '${movimiento}'
+                  WHERE idRefrigeradorSolicitado = '${id}'`
+                  , function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var dato = resultset.rowsAffected;
+              return res.status(200).json(dato);
+            }
+          });
+        } catch (err) {
+          return res
+            .status(500)
+            .json({ message: `Error al agregar los RefriSolicitadoes. Err: ${err}` });
+        }
+      },
+      RefriPorTiendaMov:
+    async (req, res, next) => {
+      try {
+        const { idTienda, idSolicitud, movimiento} = req.body;
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`Select * 
+                  FROM RefrigeradorSolicitado RS 
+                  JOIN Solicitud S on RS.idSolicitud=S.idSolicitud
+                  JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
+                  JOIN Tienda T on S.idTienda=T.idTienda
+                  WHERE T.idTienda = '${idTienda}' 
+                  AND movimiento = '${movimiento}'
+                  AND idRefrigeradorSolicitado NOT IN (SELECT idRefrigeradorSolicitado
+                                                        FROM RefrigeradorSolicitado RS
+                                                        JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
+                                                        WHERE RS.idSolicitud = ${idSolicitud})`
+                  , function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var RefriSolicitadoes = resultset.recordset;
+              return res.status(200).json(RefriSolicitadoes);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los RefriSolicitadoes. Err: ${err}` });
+      }
+    },
 };
