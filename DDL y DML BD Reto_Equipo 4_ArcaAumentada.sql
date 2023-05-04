@@ -142,7 +142,7 @@ insert into CEDI
 values('Guadalupe','Mexico','Monterrey','Noreste');
 
 insert into Chofer 
-values(213454,'Juan Perez',812324321,'JUAN2135PG','PASSWD1234');
+values(1,'awd',12345,'dwad','awda');
 
 insert into Dueño 
 values('1836577170A','Monterrey','Nuevo Leon',8111,'Antonia Lopez Villarreal','Alta Vista','Buenos Aires 200', 64800);
@@ -190,10 +190,10 @@ insert into RefrigeradorSolicitado
 values (5, 'CRIOTEC-CFX19-P', 4, '2021-10-30 12:00:00', 'Si', 'No parece que vaya a caber un refrigerador grande', 'aaa',1);
 
 insert into RefrigeradorSolicitado
-values (6, 'CRIOTEC-CFX42-P', 4, '2021-10-30 12:00:00', 'Si', 'No parece que vaya a caber un refrigerador más grande que este', 'a',1);
+values (10, 'CRIOTEC-CFX42-P', 7, '2021-10-30 12:00:00', 'Cambiar', 'No parece que vaya a caber un refrigerador más grande que este', 'a',2);
 
 insert into Checklist
-values (1, 1, 'Primera y Fondo', 'Mover el refrigerador actual lo suficiente para meter el nuestro', 2, '2021-10-30 12:00:00');
+values (2, 1, 'Primera y Fondo', 'Mover el refrigerador actual lo suficiente para meter el nuestro', 2, '2021-10-30 12:00:00');
 
 
  insert into visita 
@@ -205,7 +205,7 @@ values (1, 1, 'Primera y Fondo', 'Mover el refrigerador actual lo suficiente par
 
  Select * from ModeloRefrigerador
 
- Select * from Refrigerador
+ Select * from RefrigeradorSolicitado
 
  select * from Administrador
 
@@ -241,3 +241,25 @@ JOIN Tienda T on S.idTienda=T.idTienda
                   FROM RefrigeradorSolicitado RS
                   JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
                   WHERE RS.idSolicitud = 4
+
+
+DELETE FROM Checklist
+WHERE idChecklist IN (SELECT C.idChecklist
+						FROM CHECKLIST C JOIN RefrigeradorSolicitado RS ON C.idChecklist=RS.idChecklist
+						WHERE RS.movimiento = 'Cambiar')
+
+DELETE FROM RefrigeradorSolicitado
+WHERE idRefrigeradorSolicitado IN (SELECT idRefrigeradorSolicitado 
+									FROM RefrigeradorSolicitado
+										WHERE movimiento = 'Cambiar')
+
+
+
+UPDATE RefrigeradorSolicitado
+SET movimiento = 'Cambiar'
+WHERE idRefrigeradorSolicitado = 1
+
+EXECUTE ActualizarSolicitud
+
+insert into RefrigeradorSolicitado
+values (1,'CRIOTEC-CFX19-P', 4, '2021-10-30 12:00:00', 'Mantener', 'No parece que vaya a caber un refrigerador grande', 'aaa',2)

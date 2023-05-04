@@ -14,6 +14,7 @@ router.get("/refrisolicitudpuertas/:id", RefriSolicitado.RefriSolicitadoPuertas)
 router.get("/count/:id", RefriSolicitado.CountRefri);
 router.put("/updatemovimiento/:id", RefriSolicitado.UpdateMovimiento);
 router.get("/sum/:id", RefriSolicitado.SumPuertas);
+router.put("/comentarios/:id", RefriSolicitado.UpdateComentarios);
 
 
 module.exports = router;

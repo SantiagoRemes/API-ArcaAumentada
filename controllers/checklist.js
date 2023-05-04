@@ -69,7 +69,6 @@ module.exports = {
         const id= req.params.id;
 
         const {puerta, posicion, movimientos, personas, horario} = req.body;
-
         const pool = await poolPromise;
         const result = await pool
           .request()

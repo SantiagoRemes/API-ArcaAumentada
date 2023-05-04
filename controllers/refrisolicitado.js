@@ -127,6 +127,7 @@ module.exports = {
                   JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
                   JOIN Tienda T on S.idTienda=T.idTienda
                   WHERE T.idTienda = '${idTienda}' 
+                  AND S.estatus = 'Terminada'
                   AND idRefrigeradorSolicitado NOT IN (SELECT idRefrigeradorSolicitado
                                                         FROM RefrigeradorSolicitado RS
                                                         JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
@@ -186,6 +187,7 @@ module.exports = {
                   JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
                   JOIN Tienda T on S.idTienda=T.idTienda
                   WHERE T.idTienda = '${id}'
+                  AND S.estatus = 'Terminada'
                   `
                   , function (err, resultset) {
             if (err) {
@@ -310,5 +312,32 @@ module.exports = {
           .status(500)
           .json({ message: `Error al obtener los RefriSolicitadoes. Err: ${err}` });
       }
+    },
+    UpdateComentarios:
+    async (req, res, next) => {
+      try {
+        const id= req.params.id;
+
+        const {comentarios} = req.body;
+
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`UPDATE RefrigeradorSolicitado
+                  SET comentarios = '${comentarios}'
+                  WHERE idRefrigeradorSolicitado = '${id}'`
+                  , function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var dato = resultset.rowsAffected;
+              return res.status(200).json(dato);
+            }
+          });
+        } catch (err) {
+          return res
+            .status(500)
+            .json({ message: `Error al agregar los RefriSolicitadoes. Err: ${err}` });
+        }
     },
 };
