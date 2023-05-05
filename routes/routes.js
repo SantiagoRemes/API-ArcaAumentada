@@ -12,5 +12,6 @@ router.use("/solicitud", require("./solicitud.js"));
 router.use("/visita", require("./visita.js"));
 router.use("/dueno", require("./dueno.js"));
 router.use("/tienda", require("./tienda.js"));
+router.use("/image", require("./image.js"))
 
 module.exports = router;

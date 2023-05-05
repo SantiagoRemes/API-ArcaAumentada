@@ -142,7 +142,13 @@ insert into CEDI
 values('Guadalupe','Mexico','Monterrey','Noreste');
 
 insert into Chofer 
-values(1,'awd',12345,'dwad','awda');
+values(213454,'Juan Perez', 812324321,'JUAN2135PG','PASSWD1234');
+
+insert into Administrador
+values (145675, 'Carlos Dueñaz', 819231, 'CarlosDu', 'ArcaCocaCola');
+
+insert into Desarrollador
+values (326372, 'Juan Mercedes', 811726, 'JuanMercedes', '20023010');
 
 insert into Dueño 
 values('1836577170A','Monterrey','Nuevo Leon',8111,'Antonia Lopez Villarreal','Alta Vista','Buenos Aires 200', 64800);
@@ -168,98 +174,97 @@ values ('CRIOTEC-CFX42-G',2,'G',720,4,51840.00,'Criotec',3674.00,4.25,14400.00,'
 insert into ModeloRefrigerador
 values ('CRIOTEC-CFX64-G',3,'G',945,5,85050.00,'Criotec',4899.00,6.82,23625.00,'Coca-Cola')
 
-insert into Administrador
-values (145675, 'Carlos Dueñaz', 819231, 'CarlosDu', 'ArcaCocaCola');
-
-insert into Desarrollador
-values (326372, 'Juan Mercedes', 811726, 'JuanMercedes', '20023010');
-
+-------------------------------------
+-------------------------------------
 insert into Solicitud
-values ('2023-04-24','2021-10-28', '2021-10-30', 'Terminada', 145675, 213454, 326372, '58293949592', 'Guadalupe');
-
-insert into Solicitud
-values ('2023-04-24','2021-10-28', '2021-10-30', 'Aprobada', 145675, 213454, 326372, '58293949592', 'Guadalupe');
-
-insert into Solicitud
-values ('2023-04-24','2021-10-28', '2021-10-30', 'Pendiente', 145675, 213454, 326372, '58293949592', 'Guadalupe');
-
-insert into Solicitud
-values ('2023-04-24','2021-10-28', '2021-10-30', 'Negada', 145675, 213454, 326372, '58293949592', 'Guadalupe');
-
-insert into RefrigeradorSolicitado
-values (5, 'CRIOTEC-CFX19-P', 4, '2021-10-30 12:00:00', 'Si', 'No parece que vaya a caber un refrigerador grande', 'aaa',1);
-
-insert into RefrigeradorSolicitado
-values (10, 'CRIOTEC-CFX42-P', 7, '2021-10-30 12:00:00', 'Cambiar', 'No parece que vaya a caber un refrigerador más grande que este', 'a',2);
-
+values ('2023-05-04',null,null, 'Pendiente', null, null, 326372, '58293949592', 'Guadalupe');
+-------------------------------------
 insert into Checklist
-values (2, 1, 'Primera y Fondo', 'Mover el refrigerador actual lo suficiente para meter el nuestro', 2, '2021-10-30 12:00:00');
+values (9, 1, 'Favorable', 'Mover el refrigerador actual lo suficiente para meter el nuestro', 2, '2021-10-30 12:00:00');
+insert into RefrigeradorSolicitado
+values (9, 'CRIOTEC-CFX42-P', 3, '', 'Mantener', null, 'http://www.google.com',9);
+-------------------------------------
+insert into Checklist
+values (2, 1, 'Favorable', 'Mover el refrigerador actual lo suficiente para meter el nuestro', 2, '2021-10-30 12:00:00');
+insert into RefrigeradorSolicitado
+values (2, 'CRIOTEC-CFX42-G', 1, '', 'Mantener', null, null,2);
+-------------------------------------
+insert into RefrigeradorSolicitado
+values (5, 'CRIOTEC-CFX42-P', null, '', 'Mantener', null, null, null);
+insert into RefrigeradorSolicitado
+values (6, 'CRIOTEC-CFX42-G', null, '', 'Mantener', null, null,null);
+-------------------------------------
+
+-------------------------------------
+-------------------------------------
+insert into Solicitud
+values ('2023-05-04', '2023-05-04', '2023-05-04', 'Terminada', 145675, 213454, 326372, '58293949592', 'Guadalupe');
+-------------------------------------
+insert into Checklist
+values (3, 1, 'Favorable', 'Mover el refrigerador actual lo suficiente para meter el nuestro', 2, '2021-10-30 12:00:00');
+insert into RefrigeradorSolicitado
+values (3, 'CRIOTEC-CFX19-P', 2, '2021-10-30 12:00:00', 'Mantener', 'No parece que vaya a caber un refrigerador más grande que este', 'http//www.google.com',3);
+-------------------------------------
+insert into Checklist
+values (4, 1, 'Favorable', 'Mover el refrigerador actual lo suficiente para meter el nuestro', 2, '2021-10-30 12:00:00');
+insert into RefrigeradorSolicitado
+values (4, 'CRIOTEC-CFX19-G', 2, '2021-10-30 12:00:00', 'Mantener', 'No parece que vaya a caber un refrigerador más grande que este', 'http//www.google.com',4);
+-------------------------------------
+-------------------------------------
 
 
- insert into visita 
- values(58293949592, 69420, '2023/01/29','No parece que vaya a caber un refrigeradorñgrande');
-
- insert into Refrigerador
- values('12A', 'CRIOTEC-CFX19-P' )
-
-
- Select * from ModeloRefrigerador
-
- Select * from RefrigeradorSolicitado
-
- select * from Administrador
-
- delete from Administrador where idAdministrador = 145675
-
-
-
-
- SELECT * FROM Solicitud S
- WHERE estatus = 'Pendiente' AND idDesarrollador = '326372' AND MONTH(GETDATE()) = MONTH(fecha_solicitud) AND YEAR(GETDATE()) = YEAR(fecha_solicitud)
-
- SELECT YEAR(GETDATE()) AS Year;
-
-
- SELECT * FROM Solicitud S
-JOIN Tienda T on S.idTienda=T.idTienda 
-                  WHERE idDesarrollador = '326372'
-                  ORDER BY idSolicitud DESC
-
-
-
-
-				  Select * 
-                  FROM RefrigeradorSolicitado RS JOIN Solicitud S on RS.idSolicitud=S.idSolicitud
-                  JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
-                  JOIN Tienda T on S.idTienda=T.idTienda
-                  WHERE T.idTienda = 58293949592 AND idRefrigeradorSolicitado NOT IN (Select  idRefrigeradorSolicitado
-																					  FROM RefrigeradorSolicitado RS
-																					  JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
-																					  WHERE RS.idSolicitud = 4)
-
-				  Select  *
-                  FROM RefrigeradorSolicitado RS
-                  JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
-                  WHERE RS.idSolicitud = 4
-
+DELETE FROM Solicitud
+Where idSolicitud = 4
 
 DELETE FROM Checklist
-WHERE idChecklist IN (SELECT C.idChecklist
-						FROM CHECKLIST C JOIN RefrigeradorSolicitado RS ON C.idChecklist=RS.idChecklist
-						WHERE RS.movimiento = 'Cambiar')
+Where idChecklist = 2
 
 DELETE FROM RefrigeradorSolicitado
-WHERE idRefrigeradorSolicitado IN (SELECT idRefrigeradorSolicitado 
-									FROM RefrigeradorSolicitado
-										WHERE movimiento = 'Cambiar')
+Where idRefrigeradorSolicitado = 2
 
+Select * from RefrigeradorSolicitado
 
+Select * FROM RefrigeradorSolicitado
+WHERE fecha_Entrega = null AND idmodelo = 
 
 UPDATE RefrigeradorSolicitado
-SET movimiento = 'Cambiar'
+SET comentarios = 'a'
 WHERE idRefrigeradorSolicitado = 1
 
-EXECUTE ActualizarSolicitud
+Select * FROM RefrigeradorSolicitado
+WHERE fecha_Entrega = '' AND idModelo = 'CRIOTEC-CFX42-P' AND (idSolicitud IS null OR idSolicitud=6)
 
-insert into RefrigeradorSolicitado
-values (1,'CRIOTEC-CFX19-P', 4, '2021-10-30 12:00:00', 'Mantener', 'No parece que vaya a caber un refrigerador grande', 'aaa',2)
+Select * FROM RefrigeradorSolicitado
+WHERE fecha_Entrega = '' AND idModelo = CRIOTEC-CFX42-P AND idSolicitud IS null OR idSolicitud=${idSolicitud}`
+
+SELECT * FROM RefrigeradorSolicitado
+WHERE idSolicitud = 6
+
+
+Select * FROM RefrigeradorSolicitado
+WHERE fecha_Entrega = '' AND idModelo = 'CRIOTEC-CFX42-P' AND (idSolicitud IS null OR idSolicitud=8)
+
+UPDATE RefrigeradorSolicitado SET imageurl = 'http://192.168.1.131:2000/images/archivo-1683250723243.png' WHERE idRefrigeradorSolicitado = 1
+
+
+
+Select * 
+                  FROM RefrigeradorSolicitado RS 
+                  JOIN Solicitud S on RS.idSolicitud=S.idSolicitud
+                  JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
+                  JOIN Tienda T on S.idTienda=T.idTienda
+                  WHERE T.idTienda = '58293949592' 
+                  AND S.estatus = 'Terminada'
+                  AND idRefrigeradorSolicitado NOT IN (SELECT idRefrigeradorSolicitado
+                                                        FROM RefrigeradorSolicitado RS
+                                                        JOIN ModeloRefrigerador MR on RS.idModelo=MR.idModelo
+                                                        WHERE RS.idSolicitud = 3)
+
+
+UPDATE Solicitud
+SET estatus = 'Pendiente'
+WHERE idSolicitud = 3
+
+SELECT D.idDesarrollador, D.nombre,  COUNT(S.idSolicitud) AS Solicitudes 
+FROM Desarrollador D JOIN Solicitud S ON D.idDesarrollador=S.idDesarrollador
+GROUP BY D.idDesarrollador, D.nombre

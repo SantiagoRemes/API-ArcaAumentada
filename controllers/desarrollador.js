@@ -80,4 +80,27 @@ module.exports = {
         return res.status(500).json({ message: `Error al hacer login. Err: ${err}` });
       }
     },
+    getTop3:
+    async (req, res, next) => {
+      try {
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`SELECT D.idDesarrollador, D.nombre,  COUNT(S.idSolicitud) AS Solicitudes 
+                  FROM Desarrollador D JOIN Solicitud S ON D.idDesarrollador=S.idDesarrollador
+                  GROUP BY D.idDesarrollador, D.nombre
+                  ORDER BY COUNT(S.idSolicitud) DESC`, function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var dato = resultset.recordset;
+              return res.status(200).json(dato);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los Desarrolladores. Err: ${err}` });
+      }
+    },
 };

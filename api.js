@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
 dotenv.config();
 
 const app = express()
@@ -15,6 +16,8 @@ app.get('/', (req, res) => {
 })
 
 app.use(require('./routes/routes.js'))
+app.use(bodyParser.json());
+app.use("/images", express.static("images"));
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

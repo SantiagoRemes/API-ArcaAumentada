@@ -305,9 +305,7 @@ module.exports = {
         const pool = await poolPromise;
         const result = await pool
           .request()
-          .query(`UPDATE Solicitud 
-                  SET estatus = 'Terminada', fecha_Entrega = CAST( GETDATE() AS Date )
-                  WHERE idSolicitud = ${id}`
+          .query(`EXEC TerminarSolicitud @Solicitudid = ${id}`
                   , function (err, resultset) {
             if (err) {
               console.log(err);

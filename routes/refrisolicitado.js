@@ -3,7 +3,7 @@ const router = express.Router();
 const RefriSolicitado = require("../controllers/refrisolicitado.js")
 
 router.get("/", RefriSolicitado.getAllRefriSolicitado);
-router.get("/:id", RefriSolicitado.getRefriSolicitado);
+//router.get("/:id", RefriSolicitado.getRefriSolicitado);
 router.post("/add", RefriSolicitado.postRefriSolicitado);
 router.put("/update/:id", RefriSolicitado.putRefriSolicitado);
 router.delete("/delete/:id", RefriSolicitado.deleteRefriSolicitado);
@@ -15,6 +15,8 @@ router.get("/count/:id", RefriSolicitado.CountRefri);
 router.put("/updatemovimiento/:id", RefriSolicitado.UpdateMovimiento);
 router.get("/sum/:id", RefriSolicitado.SumPuertas);
 router.put("/comentarios/:id", RefriSolicitado.UpdateComentarios);
+router.post("/edfunico", RefriSolicitado.EDFUnico);
+router.put("/changeedf", RefriSolicitado.ChangeEDF);
 
 
 module.exports = router;

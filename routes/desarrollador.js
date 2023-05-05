@@ -11,5 +11,8 @@ router.get("/:id", Desarrollador.getDesarrollador);
 // All
 router.post("/login", Desarrollador.loginDesAdminChofer);
 
+// Administrador
+router.get("/gettop3", Desarrollador.getTop3);
+
 
 module.exports = router;

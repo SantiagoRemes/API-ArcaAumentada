@@ -319,7 +319,6 @@ module.exports = {
         const id= req.params.id;
 
         const {comentarios} = req.body;
-
         const pool = await poolPromise;
         const result = await pool
           .request()
@@ -339,5 +338,50 @@ module.exports = {
             .status(500)
             .json({ message: `Error al agregar los RefriSolicitadoes. Err: ${err}` });
         }
+    },
+    EDFUnico:
+    async (req, res, next) => {
+      try {
+        const {idModelo, idSolicitud} = req.body;
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`Select * FROM RefrigeradorSolicitado
+                  WHERE fecha_Entrega = '' AND idModelo = '${idModelo}' AND (idSolicitud IS null OR idSolicitud=${idSolicitud})`
+                  , function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var RefriSolicitadoes = resultset.recordset;
+              return res.status(200).json(RefriSolicitadoes);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los RefriSolicitadoes. Err: ${err}` });
+      }
+    },
+    ChangeEDF:
+    async (req, res, next) => {
+      try {
+        const { idRefri1, idRefri2} = req.body;
+        const pool = await poolPromise;
+        const result = await pool
+          .request()
+          .query(`EXEC ChangeRefri @RSid1=${idRefri1}, @RSid2=${idRefri2}`
+                  , function (err, resultset) {
+            if (err) {
+              console.log(err);
+            } else {
+              var RefriSolicitadoes = resultset.rowsAffected;
+              return res.status(200).json(RefriSolicitadoes);
+            }
+          });
+      } catch (err) {
+        return res
+          .status(500)
+          .json({ message: `Error al obtener los RefriSolicitadoes. Err: ${err}` });
+      }
     },
 };
