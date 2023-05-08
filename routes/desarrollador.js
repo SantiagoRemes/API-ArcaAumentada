@@ -12,7 +12,7 @@ router.get("/:id", Desarrollador.getDesarrollador);
 router.post("/login", Desarrollador.loginDesAdminChofer);
 
 // Administrador
-router.get("/gettop3", Desarrollador.getTop3);
+router.get("/gettop3/des", Desarrollador.getTop3);
 
 
 module.exports = router;

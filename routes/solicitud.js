@@ -9,7 +9,7 @@ router.get("/", Solicitud.getAllSolicitud);
 router.get("/idesdate/:id", Solicitud.getSolicitudandIdDesDate);
 router.post("/byestado", Solicitud.getSolicitudandByEstado);
 router.get("/tiendades/:idDes", Solicitud.getSolicitudandTiendaDes);
-//post solicitud
+router.post("/add", Solicitud.newSolicitud);
 
 //Admin
 router.put("/aceptarcambios", Solicitud.ActualizarSolicitud);

@@ -20,15 +20,14 @@ module.exports = {
             .json({ message: `Error al obtener los Solicitudes. Err: ${err}` });
         }
     },
-    postSolicitud:
+    newSolicitud:
     async (req, res, next) => {
       try {
-        const {id, fecha_solicitud, fecha_aprobada, fecha_entrega, estatus, idChofer, idAdministrador, idDesarrollador, idTienda, CEDINombre} = req.body;
-
+        const {idDesarrollador, idTienda, CEDINombre} = req.body;
         const pool = await poolPromise;
         const result = await pool
           .request()
-          .query(`INSERT INTO Solicitud VALUES('${id}', '${fecha_solicitud}', '${fecha_aprobada}', '${fecha_entrega}', '${estatus}', ${idAdministrador}, ${idChofer}, ${idDesarrollador}, '${idTienda}', '${CEDINombre}')`, function (err, resultset) {
+          .query(`INSERT INTO Solicitud VALUES(CAST(GETDATE() AS Date), null, null, 'Pendiente', null, null, '${idDesarrollador}', '${idTienda}', '${CEDINombre}')`, function (err, resultset) {
             if (err) {
               console.log(err);
             } else {

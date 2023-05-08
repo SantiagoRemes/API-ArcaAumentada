@@ -68,13 +68,13 @@ module.exports = {
       try {
         const id= req.params.id;
 
-        const {idModelo, idSolicitud, fecha_Entrega, movimiento, comentarios, idChecklist, imageurl} = req.body;
+        const {idModelo, idSolicitud, fecha_Entrega, movimiento, comentarios, idChecklist} = req.body;
 
         const pool = await poolPromise;
         const result = await pool
           .request()
           .query(`UPDATE RefrigeradorSolicitado
-                  SET idModelo = '${idModelo}', idSolicitud = '${idSolicitud}', fecha_Entrega = '${fecha_Entrega}', movimiento = '${movimiento}', comentarios = '${comentarios}', imageurl = '${imageurl}',idChecklist = ${idChecklist}
+                  SET idModelo = '${idModelo}', idSolicitud = '${idSolicitud}', fecha_Entrega = '${fecha_Entrega}', movimiento = '${movimiento}', comentarios = '${comentarios}',idChecklist = ${idChecklist}
                   WHERE idRefrigeradorSolicitado = '${id}'`
                   , function (err, resultset) {
             if (err) {
